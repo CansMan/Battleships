@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using TMPro;
 
 public class MouseController : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class MouseController : MonoBehaviour
     public Tilemap map;
     public GameManagerScript mgrObj;
     private GameObject heldShip;
+    
+    public TMP_Text shipInfo;
     
     // Start is called before the first frame update
     void Start()
@@ -26,6 +29,7 @@ public class MouseController : MonoBehaviour
 
         //Debug.DrawRay(mousePosition, Vector2.zero, Color.green);
 
+        DisplayShipInfo(hits, mousePosition);
 
         if (Input.GetMouseButtonDown(0) && mgrObj.GameRunning == true)
         {
@@ -176,6 +180,57 @@ public class MouseController : MonoBehaviour
             return true;
         }
         return false;
+    }
+
+    public void DisplayShipInfo(RaycastHit2D[] hits, Vector3 mousePos)
+    {
+        bool isShip = false;
+        GameObject ship = null;
+        
+        if (hits.Length > 0)
+        {
+            foreach (RaycastHit2D col in hits)
+            {
+                if (col.collider.gameObject.layer == 6)
+                {
+                    isShip = true;
+                    ship = col.collider.gameObject;
+                }
+            }
+        }
+
+        if (isShip)
+        {
+            string shipType = "";
+            int hullMax = 0;
+            int hullInt = 0;
+
+            switch (ship.GetComponent<ShipScript>().shipType)
+            {
+                case 1:
+                    shipType = "Scout Ship";
+                    hullMax = 1;
+                    break;
+                case 2:
+                    shipType = "Battleship";
+                    hullMax = 3;
+                    break;
+                case 3:
+                case 4:
+                default:
+                    break;
+            }
+
+            hullInt = ship.GetComponent<ShipScript>().hullInt;
+
+            shipInfo.text = "Ship Type: " + shipType + "\nHull Integrity: " + hullInt + "/" + hullMax;
+            //shipInfo.ForceMeshUpdate();
+            shipInfo.gameObject.SetActive(true);
+        }
+        else
+        {
+            shipInfo.gameObject.SetActive(false);
+        }
     }
 }
 
