@@ -55,6 +55,7 @@ public class MouseController : MonoBehaviour
         GameObject tileHit = null;
 
 
+
         if (hits.Length > 0)
         {
             foreach (RaycastHit2D col in hits)
@@ -99,6 +100,54 @@ public class MouseController : MonoBehaviour
                     //heldShip = null;
                     mgrObj.turnPhase++;
                     heldShip.GetComponent<ShipScript>().UpdateRotation();
+                    if (heldShip.GetComponent<ShipScript>().shipType != 1)
+                    {
+                        float vertOffset = heldShip.GetComponent<ShipScript>().shipSize.y / 8;
+                        float horizOffset = heldShip.GetComponent<ShipScript>().shipSize.x / 8;
+                        switch (heldShip.GetComponent<ShipScript>().rotation)
+                        {
+                            case (0):
+                                if (tileHit.tag == "BackTile")
+                                {
+                                     heldShip.transform.position += new Vector3(-horizOffset, vertOffset, 0f);
+                                }
+                                else
+                                {
+                                    heldShip.transform.position += new Vector3(horizOffset, -vertOffset, 0f);
+                                }
+                                break;
+                            case (1):
+                                if (tileHit.tag == "BackTile")
+                                {
+                                    heldShip.transform.position += new Vector3(horizOffset, vertOffset, 0f);
+                                }
+                                else
+                                {
+                                    heldShip.transform.position += new Vector3(-horizOffset, -vertOffset, 0f);
+                                }
+                                break;
+                            case (2):
+                                if (tileHit.tag == "BackTile")
+                                {
+                                    heldShip.transform.position += new Vector3(horizOffset, -vertOffset, 0f);
+                                }
+                                else
+                                {
+                                    heldShip.transform.position += new Vector3(-horizOffset, vertOffset, 0f);
+                                }
+                                break;
+                            case (3):
+                                if (tileHit.tag == "BackTile")
+                                {
+                                    heldShip.transform.position += new Vector3(-horizOffset, -vertOffset, 0f);
+                                }
+                                else
+                                {
+                                    heldShip.transform.position += new Vector3(horizOffset, vertOffset, 0f);
+                                }
+                                break;
+                        }
+                    }
                     ShipFire(hits, mousePosition);
                 }
             }

@@ -29,12 +29,33 @@ public class ShipScript : MonoBehaviour
 
     GameObject MgrObject;
 
+    public Vector2 shipSize;
+
     // Start is called before the first frame update
     void Start()
     {
         MgrObject = FindObjectOfType<GameManagerScript>().gameObject;
         if (playerSide == 1) MgrObject.GetComponent<GameManagerScript>().Player1Ships.Add(this.gameObject);
         else if (playerSide == 2) MgrObject.GetComponent<GameManagerScript>().Player2Ships.Add(this.gameObject);
+
+        PolygonCollider2D collide = gameObject.GetComponent<PolygonCollider2D>();
+
+        Vector2[] colliderPoints = collide.points;
+
+        float maxX = 0;
+        float maxY = 0;
+        float minX = 0;
+        float minY = 0;
+        
+        foreach (Vector2 point in colliderPoints)
+        {
+            if (point.x > maxX) maxX = point.x;
+            if (point.y > maxY) maxY = point.y;
+            if (point.x < minX) minX = point.x;
+            if (point.y < minY) minY = point.y;
+        }
+
+        shipSize = new Vector2(maxX - minX, maxY - minY);
     }
 
     // Update is called once per frame

@@ -6,6 +6,7 @@ TagManager:
   tags:
   - LeftTurnTile
   - RightTurnTile
+  - BackTile
   layers:
   - Default
   - TransparentFX
