@@ -64,6 +64,7 @@ public class MouseController : MonoBehaviour
                 {
                     isShip = true;
                     ship = col.collider.gameObject;
+                    Debug.Log("Ship");
                 }
                 if (col.collider.gameObject.layer == 7)
                 {
@@ -102,8 +103,8 @@ public class MouseController : MonoBehaviour
                     heldShip.GetComponent<ShipScript>().UpdateRotation();
                     if (heldShip.GetComponent<ShipScript>().shipType != 1)
                     {
-                        float vertOffset = heldShip.GetComponent<ShipScript>().shipSize.y / 8;
-                        float horizOffset = heldShip.GetComponent<ShipScript>().shipSize.x / 8;
+                        float vertOffset = heldShip.GetComponent<ShipScript>().shipSize.y / 4 - .25f;
+                        float horizOffset = heldShip.GetComponent<ShipScript>().shipSize.x / 4 - .5f;
                         switch (heldShip.GetComponent<ShipScript>().rotation)
                         {
                             case (0):
@@ -147,6 +148,7 @@ public class MouseController : MonoBehaviour
                                 }
                                 break;
                         }
+                        
                     }
                     ShipFire(hits, mousePosition);
                 }
@@ -265,6 +267,9 @@ public class MouseController : MonoBehaviour
                     hullMax = 3;
                     break;
                 case 3:
+                    shipType = "Command Ship";
+                    hullMax = 2;
+                    break;
                 case 4:
                 default:
                     break;
