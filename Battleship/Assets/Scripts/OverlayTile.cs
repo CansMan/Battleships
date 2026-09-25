@@ -10,7 +10,7 @@ public class OverlayTile : MonoBehaviour
     {
         
     }
-
+    
     public void ShowTile()
     {
         gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);

@@ -70,6 +70,7 @@ public class ShipScript : MonoBehaviour
         }
     }
 
+    //Step by step checking and showing move tiles for the current ship
     public void ShowMoveTiles()
     {
         switch (rotation)
